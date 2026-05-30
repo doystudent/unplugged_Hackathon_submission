@@ -77,9 +77,9 @@ public class SnakeGame {
                 boolean grow = (board[newY][newX] == 2);
                 if (collides(snake, newX, newY, grow)) running = false;
                 snake.addFirst(new int[]{newX, newY});
-                if (grow) fruit = spawnFruit(board);
-                else snake.removeLast();
+                if (!grow) snake.removeLast();
                 for (int[] coord : snake) board[coord[1]][coord[0]] = 1;
+                if (grow) fruit = spawnFruit(board);
                 print_board(board);
                 lastTick = currentTime; 
             }
