@@ -71,10 +71,10 @@ public class SnakeGame {
                 int key = System.in.read();
                 char ch = (char) key;
                 if (ch == 'x') running = false;
-                if (ch == 'a' && curr_dir != 3) next_dir = 0; // left
-                if (ch == 's' && curr_dir != 2) next_dir = 1; // down
-                if (ch == 'w' && curr_dir != 1) next_dir = 2; // up
-                if (ch == 'd' && curr_dir != 0) next_dir = 3; // right
+                if (ch == 'h' && curr_dir != 3) next_dir = 0; // left
+                if (ch == 'j' && curr_dir != 2) next_dir = 1; // down
+                if (ch == 'k' && curr_dir != 1) next_dir = 2; // up
+                if (ch == 'l' && curr_dir != 0) next_dir = 3; // right
             }
 
             long currentTime = System.currentTimeMillis();
