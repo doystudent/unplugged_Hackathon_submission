@@ -45,7 +45,7 @@ public class SnakeGame {
         int[][] board = new int[10][20];
         // Initialize snake
         LinkedList<int[]> snake = new LinkedList<>();
-        snake.add(new int[] {board.length/2, board[0].length/2});
+        snake.add(new int[] {board[0].length/2, board.length/2});
         board[board.length/2][board[0].length/2] = 1;
         // Directions
         int[][] dir = {{-1, 0}, {0, 1}, {0, -1}, {1, 0}}; // {left}, {down}, {up}, {right}
