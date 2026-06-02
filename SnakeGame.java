@@ -24,24 +24,17 @@ public class SnakeGame {
         System.out.println("press x to quit\r\ncontrols: hjkl\r\n");
     }
     public static void main(String[] args) throws IOException, InterruptedException {
-        // Initialize board
-        int[][] board = new int[10][20];
-        // Initialize snake
-        LinkedList<int[]> snake = new LinkedList<>(List.of(new int[] {board[0].length/2, board.length/2}));
+        int[][] board = new int[4][8]; // Initialize board
+        LinkedList<int[]> snake = new LinkedList<>(List.of(new int[] {board[0].length/2, board.length/2})); // Initialize snake
         board[board.length/2][board[0].length/2] = 1;
-        // Directions
         int[][] dir = {{-1, 0}, {0, 1}, {0, -1}, {1, 0}}; // {left}, {down}, {up}, {right}
-        int curr_dir = 3, next_dir = 3;
-        // Spawn fruit
-        int[] fruit = spawnFruit(board);
-        // Swap to raw
-        Runtime.getRuntime().exec(new String[] {"/bin/sh", "-c", "stty raw -echo < /dev/tty"}).waitFor();
+        int curr_dir = 3, next_dir = 3; // Initialize directions
+        int[] fruit = spawnFruit(board); // Spawn Fruit
+        Runtime.getRuntime().exec(new String[] {"/bin/sh", "-c", "stty raw -echo < /dev/tty"}).waitFor(); // Swap to raw
         long lastTick = System.currentTimeMillis();
         boolean running = true;
         while (running) {
-            // Update board values
-            for (int[] row : board) Arrays.fill(row, 0); board[fruit[1]][fruit[0]] = 2;
-            // Check for inputs
+            for (int[] row : board) Arrays.fill(row, 0); board[fruit[1]][fruit[0]] = 2; // Update board values
             if (System.in.available() > 0) {
                 char ch = (char) System.in.read();
                 if (ch == 'x') running = false;
@@ -52,23 +45,18 @@ public class SnakeGame {
             }
             long currentTime = System.currentTimeMillis();
             if (currentTime - lastTick >= 600) {
-                // Calculate new position
-                curr_dir = next_dir;
-                int newX = (snake.getFirst()[0] + dir[curr_dir][0] + board[0].length) % board[0].length, newY = (snake.getFirst()[1] + dir[curr_dir][1] + board.length) % board.length;
-                // Check if snake grows
-                boolean grow = (board[newY][newX] == 2);
-                // Check if snake collides
-                if (collides(snake, newX, newY, grow)) running = false;
-                // Update head and tail
-                snake.addFirst(new int[]{newX, newY});
+                curr_dir = next_dir; // Update direction
+                int newX = (snake.getFirst()[0] + dir[curr_dir][0] + board[0].length) % board[0].length
+                int newY = (snake.getFirst()[1] + dir[curr_dir][1] + board.length) % board.length;
+                boolean grow = (board[newY][newX] == 2); // Check if snake grows
+                if (collides(snake, newX, newY, grow)) running = false; // Check if snake collides
+                snake.addFirst(new int[]{newX, newY}); // Update head and tail
                 if (!grow) snake.removeLast();
                 for (int[] coord : snake) board[coord[1]][coord[0]] = 1;
                 board[snake.getFirst()[1]][snake.getFirst()[0]] = 3;
-                // Update fruit position if eaten
-                if (snake.size() != board.length * board[0].length && grow) fruit = spawnFruit(board);
+                if (snake.size() != board.length * board[0].length && grow) fruit = spawnFruit(board); // Update fruit position
                 print_board(board, curr_dir);
-                // Check if game is won
-                if (snake.size() == board.length * board[0].length) {System.out.println("You won!\r\n"); running = false;}
+                if (snake.size() == board.length * board[0].length) {System.out.println("You won!\r\n"); running = false;} // Check if won
                 lastTick = currentTime; 
             }
             Thread.sleep(10); 
