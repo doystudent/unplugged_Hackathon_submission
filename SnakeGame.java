@@ -46,7 +46,7 @@ public class SnakeGame {
             long currentTime = System.currentTimeMillis();
             if (currentTime - lastTick >= 600) {
                 curr_dir = next_dir; // Update direction
-                int newX = (snake.getFirst()[0] + dir[curr_dir][0] + board[0].length) % board[0].length
+                int newX = (snake.getFirst()[0] + dir[curr_dir][0] + board[0].length) % board[0].length;
                 int newY = (snake.getFirst()[1] + dir[curr_dir][1] + board.length) % board.length;
                 boolean grow = (board[newY][newX] == 2); // Check if snake grows
                 if (collides(snake, newX, newY, grow)) running = false; // Check if snake collides
